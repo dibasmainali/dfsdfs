@@ -103,7 +103,7 @@ export function ContactForm() {
                 <Mail className="w-5 h-5 text-primary mt-1" />
                 <div>
                   <h4 className="font-medium">Email</h4>
-                  <p className="text-sm text-muted-foreground">sarah.chen@engineering.com</p>
+                  <p className="text-sm text-muted-foreground">sabinatimilsina@gmail.com</p>
                 </div>
               </div>
               
@@ -189,7 +189,7 @@ export function ContactForm() {
                   <Input
                     id="phone"
                     {...register("phone")}
-                    placeholder="+1 (555) 123-4567"
+                    placeholder="+977 9803216073"
                     className={errors.phone ? "border-red-500" : ""}
                   />
                   {errors.phone && (
