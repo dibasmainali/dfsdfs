@@ -4,14 +4,24 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { ContactForm } from "@/components/contact-form"
-import { Toaster } from "sonner"
+import { MobileNav } from "@/components/mobile-nav"
+import { Toaster, toast } from "sonner"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 export default function MechanicalEngineeringPortfolio() {
   const [activeTab, setActiveTab] = useState("academic")
   const [isVisible, setIsVisible] = useState(false)
   const [showScrollTop, setShowScrollTop] = useState(false)
 
+  const handleDownloadResume = () => {
+    // Simulate resume download
+    console.log("Download resume clicked from main page")
+    toast.success("Resume download started!")
+    // In a real app, you would trigger an actual file download
+  }
+
   useEffect(() => {
+    console.log("Main page mounted")
     setIsVisible(true)
     const onScroll = () => {
       setShowScrollTop(window.scrollY > 300)
@@ -46,16 +56,16 @@ export default function MechanicalEngineeringPortfolio() {
         />
 
         {/* Additional machine parts */}
-        <div className="floating-element float-up-down absolute top-32 right-1/4 w-16 h-16 bg-muted-foreground rounded-full opacity-3"></div>
-        <div className="floating-element float-left-right absolute bottom-60 left-20 w-12 h-20 bg-muted-foreground rounded-sm opacity-3"></div>
-        <div className="floating-element float-up-down absolute top-80 left-1/3 w-20 h-8 bg-muted-foreground rounded-lg opacity-3"></div>
+        <div className="floating-element float-up-down absolute top-32 right-1/4 w-16 h-16 bg-muted-foreground rounded-full opacity-3 hidden sm:block"></div>
+        <div className="floating-element float-left-right absolute bottom-60 left-20 w-12 h-20 bg-muted-foreground rounded-sm opacity-3 hidden sm:block"></div>
+        <div className="floating-element float-up-down absolute top-80 left-1/3 w-20 h-8 bg-muted-foreground rounded-lg opacity-3 hidden sm:block"></div>
       </div>
 
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-background/80 backdrop-blur-md border-b border-border z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="text-xl font-bold text-primary">SABINA </div>
+            <div className="text-xl font-bold text-primary">SABINA</div>
             <div className="hidden md:flex space-x-8">
               <a href="#about" className="text-foreground hover:text-primary transition-colors hover-lift">
                 About
@@ -76,7 +86,16 @@ export default function MechanicalEngineeringPortfolio() {
                 Contact
               </a>
             </div>
-            <Button className="bg-primary hover:bg-primary/90">Download Resume</Button>
+            <div className="flex items-center space-x-4">
+              <Button 
+                className="hidden sm:inline-flex bg-primary hover:bg-primary/90"
+                onClick={handleDownloadResume}
+              >
+                Download Resume
+              </Button>
+              <ThemeToggle />
+              <MobileNav onDownloadResume={handleDownloadResume} />
+            </div>
           </div>
         </div>
       </nav>
@@ -84,26 +103,25 @@ export default function MechanicalEngineeringPortfolio() {
       {/* Hero Section */}
       <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div
-              className={`section-animate-left transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+              className={`section-animate-left transition-all duration-1000 order-2 lg:order-1 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
             >
-              <h1 className="text-5xl lg:text-6xl font-bold mb-6">
-                Hi, I'm <span className="text-primary">SABINA</span>,<br />a mechanical engineer
-                <br />I design
-                <br />
-                <span className="text-secondary">INNOVATIVE MACHINES</span>
-                <br />
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                Hi, I&apos;m <span className="text-primary">SABINA</span>,<br />
+                a mechanical engineer<br />
+                I design<br />
+                <span className="text-secondary">INNOVATIVE MACHINES</span><br />
                 for industry
               </h1>
               <Button 
                 size="lg" 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground btn-animate"
+                className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground btn-animate"
                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 Get in touch →
               </Button>
-              <div className="flex space-x-6 mt-8">
+              <div className="flex flex-wrap gap-4 sm:gap-6 mt-8">
                 <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
                   LinkedIn
                 </a>
@@ -116,12 +134,12 @@ export default function MechanicalEngineeringPortfolio() {
               </div>
             </div>
             <div
-              className={`section-animate-right transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+              className={`section-animate-right transition-all duration-1000 delay-300 order-1 lg:order-2 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
             >
               <img
                 src="/professional-female-mechanical-engineer-with-lapto.png"
-                alt="SABINA  - Mechanical Engineer"
-                className="rounded-2xl shadow-2xl"
+                alt="SABINA - Mechanical Engineer"
+                className="rounded-2xl shadow-2xl w-full h-auto max-w-md mx-auto lg:max-w-none"
               />
             </div>
           </div>
@@ -132,52 +150,56 @@ export default function MechanicalEngineeringPortfolio() {
       <section id="about" className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/30 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 section-animate">
-            <h2 className="text-4xl font-bold mb-4">About myself</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">About myself</h2>
             <div className="w-24 h-1 bg-primary mx-auto"></div>
           </div>
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="section-animate-left">
-              <img src="/female-mechanical-engineering-student-working-on-t.png" alt="About SABINA" className="rounded-2xl shadow-lg hover-scale" />
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div className="section-animate-left order-2 lg:order-1">
+              <img 
+                src="/female-mechanical-engineering-student-working-on-t.png" 
+                alt="About SABINA" 
+                className="rounded-2xl shadow-lg hover-scale w-full h-auto max-w-md mx-auto lg:max-w-none" 
+              />
             </div>
-            <div className="section-animate-right">
-              <p className="text-lg text-muted-foreground mb-6">
+            <div className="section-animate-right order-1 lg:order-2">
+              <p className="text-base sm:text-lg text-muted-foreground mb-6">
                 I am a passionate and dedicated mechanical engineering student with a love for designing innovative
-                solutions and optimizing mechanical systems. Currently in my 2nd year of bachelor's degree, I have
+                solutions and optimizing mechanical systems. Currently in my 2nd year of bachelor&apos;s degree, I have
                 developed expertise in industry-standard software and have a keen eye for precision and attention to
                 detail.
               </p>
-              <div className="grid grid-cols-2 gap-6 mb-6">
-                <div className="text-center p-4 bg-card rounded-lg border hover-lift card-hover">
-                  <div className="text-2xl font-bold text-primary pulse-animate">2</div>
-                  <div className="text-sm text-muted-foreground">Years of experience</div>
+              <div className="grid grid-cols-2 gap-4 sm:gap-6 mb-6">
+                <div className="text-center p-3 sm:p-4 bg-card rounded-lg border hover-lift card-hover">
+                  <div className="text-xl sm:text-2xl font-bold text-primary pulse-animate">2</div>
+                  <div className="text-xs sm:text-sm text-muted-foreground">Years of experience</div>
                 </div>
-                <div className="text-center p-4 bg-card rounded-lg border hover-lift card-hover">
-                  <div className="text-2xl font-bold text-primary pulse-animate">15+</div>
-                  <div className="text-sm text-muted-foreground">Projects completed</div>
+                <div className="text-center p-3 sm:p-4 bg-card rounded-lg border hover-lift card-hover">
+                  <div className="text-xl sm:text-2xl font-bold text-primary pulse-animate">15+</div>
+                  <div className="text-xs sm:text-sm text-muted-foreground">Projects completed</div>
                 </div>
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-4">Tools I use</h3>
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="text-center p-3 bg-card rounded-lg border hover-scale card-hover">
-                    <div className="text-2xl mb-2 hover-glow">⚙️</div>
-                    <div className="text-sm font-medium">AutoCAD</div>
+                <h3 className="text-lg sm:text-xl font-semibold mb-4">Tools I use</h3>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+                  <div className="text-center p-2 sm:p-3 bg-card rounded-lg border hover-scale card-hover">
+                    <div className="text-xl sm:text-2xl mb-2 hover-glow">⚙️</div>
+                    <div className="text-xs sm:text-sm font-medium">AutoCAD</div>
                   </div>
-                  <div className="text-center p-3 bg-card rounded-lg border hover-scale card-hover">
-                    <div className="text-2xl mb-2 hover-glow">🔧</div>
-                    <div className="text-sm font-medium">SOLIDWORKS</div>
+                  <div className="text-center p-2 sm:p-3 bg-card rounded-lg border hover-scale card-hover">
+                    <div className="text-xl sm:text-2xl mb-2 hover-glow">🔧</div>
+                    <div className="text-xs sm:text-sm font-medium">SOLIDWORKS</div>
                   </div>
-                  <div className="text-center p-3 bg-card rounded-lg border hover-scale card-hover">
-                    <div className="text-2xl mb-2 hover-glow">📊</div>
-                    <div className="text-sm font-medium">ANSYS</div>
+                  <div className="text-center p-2 sm:p-3 bg-card rounded-lg border hover-scale card-hover">
+                    <div className="text-xl sm:text-2xl mb-2 hover-glow">📊</div>
+                    <div className="text-xs sm:text-sm font-medium">ANSYS</div>
                   </div>
-                  <div className="text-center p-3 bg-card rounded-lg border hover-scale card-hover">
-                    <div className="text-2xl mb-2 hover-glow">🧮</div>
-                    <div className="text-sm font-medium">Maple</div>
+                  <div className="text-center p-2 sm:p-3 bg-card rounded-lg border hover-scale card-hover">
+                    <div className="text-xl sm:text-2xl mb-2 hover-glow">🧮</div>
+                    <div className="text-xs sm:text-sm font-medium">Maple</div>
                   </div>
-                  <div className="text-center p-3 bg-card rounded-lg border hover-scale card-hover">
-                    <div className="text-2xl mb-2 hover-glow">📈</div>
-                    <div className="text-sm font-medium">Excel</div>
+                  <div className="text-center p-2 sm:p-3 bg-card rounded-lg border hover-scale card-hover">
+                    <div className="text-xl sm:text-2xl mb-2 hover-glow">📈</div>
+                    <div className="text-xs sm:text-sm font-medium">Excel</div>
                   </div>
                 </div>
               </div>
@@ -190,41 +212,41 @@ export default function MechanicalEngineeringPortfolio() {
       <section id="education" className="py-16 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 section-animate">
-            <h2 className="text-4xl font-bold mb-4">Education</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Education</h2>
             <div className="w-24 h-1 bg-primary mx-auto"></div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             <Card className="hover:shadow-lg transition-shadow border-l-4 border-l-primary hover-lift card-hover">
-              <CardContent className="p-6">
-                <div className="flex items-start justify-between mb-2">
-                  <h3 className="text-lg font-semibold">BSc (Hons) Mechanical Engineering</h3>
-                  <span className="text-xs bg-primary text-primary-foreground px-2 py-1 rounded-full">Ongoing</span>
+              <CardContent className="p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-2 gap-2">
+                  <h3 className="text-base sm:text-lg font-semibold">Bachelor of Science in Mechanical Engineering</h3>
+                  <span className="text-xs bg-primary text-primary-foreground px-2 py-1 rounded-full self-start">Ongoing</span>
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">Institute of Engineering, Tribhuvan University</p>
-                <div className="text-sm text-muted-foreground">2023 – Present</div>
+                <p className="text-xs sm:text-sm text-muted-foreground mb-3">Institute of Engineering,Thapathali Campus</p>
+                <div className="text-xs sm:text-sm text-muted-foreground">2023 – Present</div>
               </CardContent>
             </Card>
 
             <Card className="hover:shadow-lg transition-shadow border-l-4 border-l-secondary hover-lift card-hover">
-              <CardContent className="p-6">
-                <div className="flex items-start justify-between mb-2">
-                  <h3 className="text-lg font-semibold">+2 (Science)</h3>
-                  <span className="text-xs bg-secondary text-secondary-foreground px-2 py-1 rounded-full">Completed</span>
+              <CardContent className="p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-2 gap-2">
+                  <h3 className="text-base sm:text-lg font-semibold">+2 (Science)</h3>
+                  <span className="text-xs bg-secondary text-secondary-foreground px-2 py-1 rounded-full self-start">Completed</span>
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">Khwapha Secondary School</p>
-                <div className="text-sm text-muted-foreground">2021 – 2023</div>
+                <p className="text-xs sm:text-sm text-muted-foreground mb-3">Capital College & Research Center (CCRC)</p>
+                <div className="text-xs sm:text-sm text-muted-foreground">2021 – 2023</div>
               </CardContent>
             </Card>
 
             <Card className="hover:shadow-lg transition-shadow border-l-4 border-l-accent hover-lift card-hover">
-              <CardContent className="p-6">
-                <div className="flex items-start justify-between mb-2">
-                  <h3 className="text-lg font-semibold">SEE</h3>
-                  <span className="text-xs bg-accent text-accent-foreground px-2 py-1 rounded-full">Completed</span>
+              <CardContent className="p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-2 gap-2">
+                  <h3 className="text-base sm:text-lg font-semibold">SEE</h3>
+                  <span className="text-xs bg-accent text-accent-foreground px-2 py-1 rounded-full self-start">Completed</span>
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">Learners' Academy Secondary School</p>
-                <div className="text-sm text-muted-foreground">2017 – 2020</div>
+                <p className="text-xs sm:text-sm text-muted-foreground mb-3">Learners&apos; Academy Secondary School</p>
+                <div className="text-xs sm:text-sm text-muted-foreground">2017 – 2020</div>
               </CardContent>
             </Card>
           </div>
@@ -235,74 +257,74 @@ export default function MechanicalEngineeringPortfolio() {
       <section id="projects" className="py-16 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 section-animate">
-            <h2 className="text-4xl font-bold mb-4">My Engineering Projects</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">My Engineering Projects</h2>
             <div className="w-24 h-1 bg-primary mx-auto mb-4"></div>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Here are some engineering projects I've worked on using industry-standard software tools for design,
+            <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base">
+              Here are some engineering projects I&apos;ve worked on using industry-standard software tools for design,
               analysis, and problem-solving.
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8 section-animate-left">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div className="space-y-6 sm:space-y-8 section-animate-left order-2 lg:order-1">
               <Card className="border-l-4 border-l-primary hover-lift card-hover">
-                <CardContent className="p-6">
-                  <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-xl font-semibold">Mechanical Design: Gear Assembly</h3>
-                    <span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm">
+                <CardContent className="p-4 sm:p-6">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4 gap-2">
+                    <h3 className="text-lg sm:text-xl font-semibold">Mechanical Design: Gear Assembly</h3>
+                    <span className="bg-primary text-primary-foreground px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm self-start">
                       CAD Design
                     </span>
                   </div>
-                  <p className="text-muted-foreground mb-4">
+                  <p className="text-sm sm:text-base text-muted-foreground mb-4">
                     Designed and modeled a complete gear assembly system using SOLIDWORKS. Performed stress analysis
                     using ANSYS to ensure optimal performance under various load conditions. Included detailed technical
                     drawings and manufacturing specifications.
                   </p>
-                  <span className="text-sm text-primary font-medium">CAD Design & Analysis</span>
+                  <span className="text-xs sm:text-sm text-primary font-medium">CAD Design & Analysis</span>
                 </CardContent>
               </Card>
 
               <Card className="border-l-4 border-l-secondary hover-lift card-hover">
-                <CardContent className="p-6">
-                  <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-xl font-semibold">Thermal Analysis: Heat Exchanger</h3>
-                    <span className="bg-secondary text-secondary-foreground px-3 py-1 rounded-full text-sm">
+                <CardContent className="p-4 sm:p-6">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4 gap-2">
+                    <h3 className="text-lg sm:text-xl font-semibold">Thermal Analysis: Heat Exchanger</h3>
+                    <span className="bg-secondary text-secondary-foreground px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm self-start">
                       Thermal Engineering
                     </span>
                   </div>
-                  <p className="text-muted-foreground mb-4">
+                  <p className="text-sm sm:text-base text-muted-foreground mb-4">
                     Conducted comprehensive thermal analysis of a shell-and-tube heat exchanger using ANSYS. Optimized
                     design parameters and calculated heat transfer coefficients using Maple for mathematical modeling.
                   </p>
-                  <span className="text-sm text-secondary font-medium">Thermal Engineering</span>
+                  <span className="text-xs sm:text-sm text-secondary font-medium">Thermal Engineering</span>
                 </CardContent>
               </Card>
 
               <Card className="border-l-4 border-l-accent hover-lift card-hover">
-                <CardContent className="p-6">
-                  <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-xl font-semibold">AutoCAD Project: Machine Parts</h3>
-                    <span className="bg-accent text-accent-foreground px-3 py-1 rounded-full text-sm">
+                <CardContent className="p-4 sm:p-6">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4 gap-2">
+                    <h3 className="text-lg sm:text-xl font-semibold">AutoCAD Project: Machine Parts</h3>
+                    <span className="bg-accent text-accent-foreground px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm self-start">
                       Technical Drafting
                     </span>
                   </div>
-                  <p className="text-muted-foreground mb-4">
+                  <p className="text-sm sm:text-base text-muted-foreground mb-4">
                     Created detailed 2D technical drawings and 3D models of various machine components. Focused on
                     precision drafting and adherence to engineering standards and tolerances.
                   </p>
-                  <span className="text-sm text-accent font-medium">Technical Drafting</span>
+                  <span className="text-xs sm:text-sm text-accent font-medium">Technical Drafting</span>
                 </CardContent>
               </Card>
             </div>
 
-            <div className="relative section-animate-right">
+            <div className="relative section-animate-right order-1 lg:order-2">
               <img
-                src="/laptop-screen-showing-solidworks-with-mechanical-g.png"
+                src="/solidworks-with-mechanical-g.png"
                 alt="Engineering Projects Showcase"
-                className="rounded-2xl shadow-2xl hover-scale"
+                className="rounded-2xl shadow-2xl hover-scale w-full h-auto max-w-md mx-auto lg:max-w-none"
               />
               <div className="absolute bottom-4 right-4">
-                <span className="bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium">
+                <span className="bg-primary text-primary-foreground px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium">
                   SOLIDWORKS
                 </span>
               </div>
@@ -315,51 +337,51 @@ export default function MechanicalEngineeringPortfolio() {
       <section id="achievements" className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/30 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 section-animate">
-            <h2 className="text-4xl font-bold mb-4">My Achievements</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">My Achievements</h2>
             <div className="w-24 h-1 bg-primary mx-auto mb-4"></div>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground text-sm sm:text-base">
               Recognition and awards for academic excellence and engineering innovation
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             <Card className="hover:shadow-lg transition-shadow hover-lift card-hover">
-              <CardContent className="p-6 text-center">
+              <CardContent className="p-4 sm:p-6 text-center">
                 <img
                   src="https://picsum.photos/300/200?random=1"
-                  alt="Dean's List Achievement"
-                  className="w-full h-40 object-cover rounded-lg mb-4 hover-scale"
+                  alt="Dean&apos;s List Achievement"
+                  className="w-full h-32 sm:h-40 object-cover rounded-lg mb-3 sm:mb-4 hover-scale"
                 />
-                <h3 className="text-lg font-semibold mb-2">Dean's List 2023</h3>
-                <p className="text-muted-foreground text-sm">
-                  Achieved Dean's List recognition for maintaining GPA above 3.8 in mechanical engineering coursework.
+                <h3 className="text-base sm:text-lg font-semibold mb-2">Dean&apos;s List 2023</h3>
+                <p className="text-muted-foreground text-xs sm:text-sm">
+                  Achieved Dean&apos;s List recognition for maintaining GPA above 3.8 in mechanical engineering coursework.
                 </p>
               </CardContent>
             </Card>
 
             <Card className="hover:shadow-lg transition-shadow hover-lift card-hover">
-              <CardContent className="p-6 text-center">
+              <CardContent className="p-4 sm:p-6 text-center">
                 <img
                   src="https://picsum.photos/300/200?random=2"
                   alt="CAD Competition Winner"
-                  className="w-full h-40 object-cover rounded-lg mb-4 hover-scale"
+                  className="w-full h-32 sm:h-40 object-cover rounded-lg mb-3 sm:mb-4 hover-scale"
                 />
-                <h3 className="text-lg font-semibold mb-2">CAD Design Competition</h3>
-                <p className="text-muted-foreground text-sm">
+                <h3 className="text-base sm:text-lg font-semibold mb-2">CAD Design Competition</h3>
+                <p className="text-muted-foreground text-xs sm:text-sm">
                   First place winner in university-wide CAD design competition for innovative gear mechanism design.
                 </p>
               </CardContent>
             </Card>
 
             <Card className="hover:shadow-lg transition-shadow hover-lift card-hover">
-              <CardContent className="p-6 text-center">
+              <CardContent className="p-4 sm:p-6 text-center">
                 <img
                   src="https://picsum.photos/300/200?random=3"
                   alt="Engineering Excellence Award"
-                  className="w-full h-40 object-cover rounded-lg mb-4 hover-scale"
+                  className="w-full h-32 sm:h-40 object-cover rounded-lg mb-3 sm:mb-4 hover-scale"
                 />
-                <h3 className="text-lg font-semibold mb-2">Engineering Excellence</h3>
-                <p className="text-muted-foreground text-sm">
+                <h3 className="text-base sm:text-lg font-semibold mb-2">Engineering Excellence</h3>
+                <p className="text-muted-foreground text-xs sm:text-sm">
                   Received Engineering Excellence Award for outstanding performance in thermodynamics and fluid
                   mechanics.
                 </p>
@@ -373,16 +395,16 @@ export default function MechanicalEngineeringPortfolio() {
       <section id="gallery" className="py-16 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 section-animate">
-            <h2 className="text-4xl font-bold mb-4">Photo Gallery</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Photo Gallery</h2>
             <div className="w-24 h-1 bg-primary mx-auto mb-4"></div>
-            <p className="text-muted-foreground">A collection of my academic journey, projects, and personal moments</p>
+            <p className="text-muted-foreground text-sm sm:text-base">A collection of my academic journey, projects, and personal moments</p>
           </div>
 
           <div className="flex justify-center mb-8">
-            <div className="bg-muted rounded-lg p-1">
+            <div className="bg-muted rounded-lg p-1 flex flex-wrap justify-center">
               <button
                 onClick={() => setActiveTab("academic")}
-                className={`px-6 py-2 rounded-md transition-colors btn-animate ${
+                className={`px-4 sm:px-6 py-2 rounded-md transition-colors btn-animate text-sm sm:text-base ${
                   activeTab === "academic"
                     ? "bg-primary text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground"
@@ -392,7 +414,7 @@ export default function MechanicalEngineeringPortfolio() {
               </button>
               <button
                 onClick={() => setActiveTab("projects")}
-                className={`px-6 py-2 rounded-md transition-colors btn-animate ${
+                className={`px-4 sm:px-6 py-2 rounded-md transition-colors btn-animate text-sm sm:text-base ${
                   activeTab === "projects"
                     ? "bg-primary text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground"
@@ -402,7 +424,7 @@ export default function MechanicalEngineeringPortfolio() {
               </button>
               <button
                 onClick={() => setActiveTab("personal")}
-                className={`px-6 py-2 rounded-md transition-colors btn-animate ${
+                className={`px-6 py-2 rounded-md transition-colors btn-animate text-sm sm:text-base ${
                   activeTab === "personal"
                     ? "bg-primary text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground"
@@ -413,7 +435,7 @@ export default function MechanicalEngineeringPortfolio() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {activeTab === "academic" && (
               <>
                 <img
@@ -524,9 +546,9 @@ export default function MechanicalEngineeringPortfolio() {
       <section id="contact" className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/30 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Have a project in mind?</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Have a project in mind?</h2>
             <div className="w-24 h-1 bg-primary mx-auto mb-4"></div>
-            <p className="text-xl text-muted-foreground">Let's discuss how we can work together</p>
+            <p className="text-lg sm:text-xl text-muted-foreground">Let&apos;s discuss how we can work together</p>
           </div>
           
           <ContactForm />
@@ -536,7 +558,7 @@ export default function MechanicalEngineeringPortfolio() {
       {/* Footer */}
       <footer className="py-8 px-4 sm:px-6 lg:px-8 border-t border-border relative z-10">
         <div className="max-w-7xl mx-auto text-center">
-          <p className="text-muted-foreground">© 2024 Designed by SABINA  and coded with precision</p>
+          <p className="text-sm sm:text-base text-muted-foreground">© 2024 Designed by SABINA and coded with precision</p>
         </div>
       </footer>
 
@@ -545,9 +567,9 @@ export default function MechanicalEngineeringPortfolio() {
         <button
           aria-label="Scroll to top"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-6 right-6 z-50 rounded-full bg-primary text-primary-foreground shadow-lg hover:shadow-xl transition-all p-3 btn-animate hover-lift"
+          className="fixed bottom-6 left-6 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-primary text-primary-foreground shadow-lg hover:shadow-xl transition-transform duration-200 flex items-center justify-center hover:-translate-y-1"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" className="sm:w-6 sm:h-6" fill="currentColor">
             <path d="M12 4l-7 7h4v7h6v-7h4z"/>
           </svg>
         </button>

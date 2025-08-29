@@ -42,11 +42,11 @@
 
 .dark {
   /* Updated dark mode tokens for industrial theme */
-  --background: oklch(0.145 0 0);
+  --background: #44464a;
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
+  --card: #44464a;
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
+  --popover: #44464a;
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.985 0 0);
   --primary-foreground: oklch(0.205 0 0);
@@ -429,6 +429,97 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Mobile-specific improvements */
+@media (max-width: 640px) {
+  .floating-element {
+    display: none;
+  }
+  
+  /* Improve touch targets on mobile */
+  button, 
+  a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Better spacing for mobile */
+  .space-y-6 > * + * {
+    margin-top: 1.25rem;
+  }
+  
+  .space-y-8 > * + * {
+    margin-top: 1.5rem;
+  }
+  
+  /* Improve card spacing on mobile */
+  .card-hover:hover {
+    transform: translateY(-2px);
+  }
+  
+  /* Reduce animation intensity on mobile for better performance */
+  .hover-lift:hover {
+    transform: translateY(-4px);
+  }
+  
+  .hover-scale:hover {
+    transform: scale(1.02);
+  }
+  
+  /* Improve mobile navigation */
+  nav {
+    padding: 0.5rem 1rem;
+  }
+  
+  /* Better mobile form spacing */
+  .space-y-4 > * + * {
+    margin-top: 1rem;
+  }
+  
+  /* Mobile-friendly image sizing */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Improve mobile button sizing */
+  .btn-animate {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+  }
+  
+  /* Mobile navigation specific improvements */
+  .md\\:hidden {
+    display: block !important;
+  }
+  
+  /* Ensure mobile menu overlay is properly positioned */
+  .fixed.inset-0 {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+  
+  /* Improve mobile menu button visibility */
+  .p-3 {
+    padding: 0.75rem;
+  }
+  
+  /* Better mobile menu spacing */
+  .space-y-2 > * + * {
+    margin-top: 0.5rem;
+  }
+}
+
+/* Tablet improvements */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .floating-gear,
+  .floating-element {
+    opacity: 0.03;
+  }
+}
+
 /* Enhanced gear animations */
 .gear-rotate {
   animation: rotate 20s linear infinite;
@@ -446,4 +537,104 @@ html {
 
 .gear-rotate-reverse:hover {
   opacity: 0.1;
+}
+
+/* Mobile navigation enhancements */
+.mobile-nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  background-color: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(8px);
+}
+
+.mobile-nav-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--background);
+}
+
+.mobile-nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.mobile-nav-links {
+  flex: 1;
+  padding: 1.5rem 1rem;
+}
+
+.mobile-nav-link {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--foreground);
+  padding: 1rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  transition: color 0.3s ease;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.mobile-nav-link:hover {
+  color: var(--primary);
+}
+
+.mobile-nav-footer {
+  padding: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+/* Ensure mobile navigation is properly hidden on larger screens */
+@media (min-width: 768px) {
+  .md\\:hidden {
+    display: none !important;
+  }
+}
+
+/* Additional mobile navigation fixes */
+@media (max-width: 767px) {
+  /* Ensure mobile menu is always visible when open */
+  .md\\:hidden {
+    display: block !important;
+  }
+  
+  /* Fix mobile menu overlay positioning */
+  .fixed.inset-0 {
+    position: fixed !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    z-index: 50 !important;
+  }
+  
+  /* Improve mobile menu button touch targets */
+  .p-3 {
+    padding: 0.75rem !important;
+  }
+  
+  /* Better mobile menu spacing */
+  .space-y-2 > * + * {
+    margin-top: 0.5rem !important;
+  }
+  
+  /* Ensure mobile navigation links are properly sized */
+  .min-h-\\[44px\\] {
+    min-height: 44px !important;
+  }
+  
+  .min-w-\\[44px\\] {
+    min-width: 44px !important;
+  }
 }

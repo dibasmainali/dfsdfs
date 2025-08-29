@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+
 import { Checkbox } from "@/components/ui/checkbox"
 import { toast } from "sonner"
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from "lucide-react"
@@ -54,13 +54,13 @@ export function ContactForm() {
       console.log("Form data:", data)
       
       // Show success message
-      toast.success("Message sent successfully! I'll get back to you soon.", {
+      toast.success("Message sent successfully! I&apos;ll get back to you soon.", {
         description: "Thank you for reaching out about your project.",
       })
       
       setIsSubmitted(true)
       reset()
-    } catch (error) {
+    } catch {
       toast.error("Failed to send message. Please try again.", {
         description: "There was an error sending your message.",
       })
@@ -75,9 +75,9 @@ export function ContactForm() {
         <CardContent className="p-8 text-center">
           <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
           <h3 className="text-2xl font-bold mb-2">Message Sent Successfully!</h3>
-          <p className="text-muted-foreground mb-6">
-            Thank you for reaching out. I'll review your project details and get back to you within 24 hours.
-          </p>
+                      <p className="text-muted-foreground mb-6">
+              Thank you for reaching out. I&apos;ll review your project details and get back to you within 24 hours.
+            </p>
           <Button 
             onClick={() => setIsSubmitted(false)}
             className="bg-primary hover:bg-primary/90 btn-animate"
@@ -91,14 +91,14 @@ export function ContactForm() {
 
   return (
     <div className="max-w-4xl mx-auto contact-form-animate">
-      <div className="grid lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
         {/* Contact Information */}
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-1 order-2 lg:order-1">
           <Card className="contact-info-animate">
             <CardHeader>
-              <CardTitle className="text-xl">Get in Touch</CardTitle>
+              <CardTitle className="text-lg sm:text-xl">Get in Touch</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-4 sm:space-y-6">
               <div className="flex items-start space-x-3">
                 <Mail className="w-5 h-5 text-primary mt-1" />
                 <div>
@@ -138,16 +138,16 @@ export function ContactForm() {
         </div>
 
         {/* Contact Form */}
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-2 order-1 lg:order-2">
           <Card className="contact-info-animate">
             <CardHeader>
-              <CardTitle className="text-xl">Contact Me</CardTitle>
-              <p className="text-muted-foreground">
-                Send me a message and I'll get back to you as soon as possible.
+              <CardTitle className="text-lg sm:text-xl">Contact Me</CardTitle>
+              <p className="text-muted-foreground text-sm sm:text-base">
+                Send me a message and I&apos;ll get back to you as soon as possible.
               </p>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
                 {/* Personal Information */}
                 <div className="grid md:grid-cols-2 gap-4 form-field-animate">
                   <div className="space-y-2">
